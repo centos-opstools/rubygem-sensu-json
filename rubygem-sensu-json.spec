@@ -3,7 +3,7 @@
 
 Name:           rubygem-%{gem_name}
 Version:        1.1.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Sensu JSON parser abstraction library
 Group:          Development/Languages
 License:        MIT
@@ -18,11 +18,15 @@ BuildRequires:  rubygem(rspec2)
 %else
 BuildRequires:  rubygem(rspec)
 %endif
-BuildRequires:  rubygem-oj
+BuildRequires:  rubygem(oj)
 
-Requires:  rubygem-oj
+Requires:  rubygem(oj)
 
 BuildArch:      noarch
+
+%if 0%{?rhel} > 0
+Provides: rubygem(%{gem_name}) = %{version}
+%endif
 
 %description
 The Sensu JSON parser abstraction library.
@@ -85,6 +89,10 @@ popd
 %{gem_instdir}/spec
 
 %changelog
+* Mon May 09 2016 Martin Mágr <mmagr@redhat.com> - 1.1.1-3
+- Explicitly list provides for RHEL
+- Use virtual require for Oj
+
 * Mon May 02 2016 para <mmagr@redhat.com> - 1.1.1-2
 - Add missing runtime dependency
 
