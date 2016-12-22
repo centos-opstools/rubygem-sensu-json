@@ -2,8 +2,8 @@
 %global gem_name sensu-json
 
 Name:           rubygem-%{gem_name}
-Version:        1.1.1
-Release:        3%{?dist}
+Version:        2.0.1
+Release:        1%{?dist}
 Summary:        The Sensu JSON parser abstraction library
 Group:          Development/Languages
 License:        MIT
@@ -20,7 +20,7 @@ BuildRequires:  rubygem(rspec)
 %endif
 BuildRequires:  rubygem(oj)
 
-Requires:  rubygem(oj)
+Requires:       rubygem(oj)
 
 BuildArch:      noarch
 
@@ -72,23 +72,20 @@ popd
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.gitignore
-%exclude %{gem_instdir}/.travis.yml
 %license %{gem_instdir}/LICENSE.txt
-%{gem_instdir}/bin
 %{gem_libdir}
 %exclude %{gem_cache}
 %{gem_spec}
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Gemfile
 %doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
 %{gem_instdir}/sensu-json.gemspec
-%{gem_instdir}/spec
 
 %changelog
+* Tue Dec 20 2016 Martin Mágr <mmagr@redhat.com> - 2.0.1-1
+- Updated to latest upstream
+
 * Mon May 09 2016 Martin Mágr <mmagr@redhat.com> - 1.1.1-3
 - Explicitly list provides for RHEL
 - Use virtual require for Oj
