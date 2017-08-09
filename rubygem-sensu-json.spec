@@ -2,7 +2,7 @@
 %global gem_name sensu-json
 
 Name:           rubygem-%{gem_name}
-Version:        2.0.1
+Version:        XXX
 Release:        1%{?dist}
 Summary:        The Sensu JSON parser abstraction library
 Group:          Development/Languages
@@ -42,8 +42,17 @@ Documentation for %{name}.
 
 %prep
 gem unpack %{SOURCE0}
+%if 0%{?dlrn} > 0
+%setup -q -D -T -n  %{dlrn_nvr}
+%else
 %setup -q -D -T -n  %{gem_name}-%{version}
+%endif
 gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
+
+# relax oj dependency
+sed 's/spec.add_dependency\(.*\)"oj", "[><= ]*\([^><=]*\)"\(.*\)/spec.add_dependency\1"oj", ">= \2"\3/g' %{gem_name}.gemspec
+find lib -type f -exec sed -i 's/gem "oj", "[><= ]*\([^><=]*\)"/gem "oj", ">= \1"/g' {} +
+
 
 %build
 # Create the gem as gem install only works on a gem file
@@ -53,11 +62,11 @@ gem build %{gem_name}.gemspec
 # by default, so that we can move it into the buildroot in %%install
 %gem_install
 
+
 %install
 mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
-
 
 
 # Run the test suite
@@ -69,6 +78,7 @@ rspec2 -Ilib spec
 rspec -Ilib spec
 %endif
 popd
+
 
 %files
 %dir %{gem_instdir}
@@ -83,15 +93,3 @@ popd
 %{gem_instdir}/sensu-json.gemspec
 
 %changelog
-* Tue Dec 20 2016 Martin Mágr <mmagr@redhat.com> - 2.0.1-1
-- Updated to latest upstream
-
-* Mon May 09 2016 Martin Mágr <mmagr@redhat.com> - 1.1.1-3
-- Explicitly list provides for RHEL
-- Use virtual require for Oj
-
-* Mon May 02 2016 para <mmagr@redhat.com> - 1.1.1-2
-- Add missing runtime dependency
-
-* Mon May 02 2016 para <mmagr@redhat.com> - 1.1.1-1
-- Initial package
