@@ -2,13 +2,15 @@
 %global gem_name sensu-json
 
 Name:           rubygem-%{gem_name}
-Version:        2.0.1
+Version:        2.1.0
 Release:        1%{?dist}
 Summary:        The Sensu JSON parser abstraction library
 Group:          Development/Languages
 License:        MIT
 URL:            https://github.com/sensu/sensu-json
 Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
+Source1:        https://github.com/sensu/%{gem_name}/archive/v%{version}.tar.gz#/%{gem_name}-%{version}.tar.gz
+
 
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
@@ -58,6 +60,7 @@ mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
+tar -xvzf %{SOURCE1} -C %{_builddir}/%{gem_name}-%{version}/%{gem_instdir} --strip-components=1 %{gem_name}-%{version}/spec
 
 
 # Run the test suite
@@ -83,6 +86,10 @@ popd
 %{gem_instdir}/sensu-json.gemspec
 
 %changelog
+* Mon Nov 06 2017 Martin Mágr <mmagr@redhat.com> - 2.1.0-1
+- Updated to latest upstream
+- Added source tarball for unit test extraction
+
 * Tue Dec 20 2016 Martin Mágr <mmagr@redhat.com> - 2.0.1-1
 - Updated to latest upstream
 
