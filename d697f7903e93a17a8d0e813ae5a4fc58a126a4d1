@@ -16,6 +16,24 @@
       "revId": "d697f7903e93a17a8d0e813ae5a4fc58a126a4d1",
       "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da86d52c_86a55b06",
+        "filename": "rubygem-sensu-json.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 314
+      },
+      "writtenOn": "2017-11-21T09:52:10Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "da86d52c_8b1484f6",
+      "revId": "d697f7903e93a17a8d0e813ae5a4fc58a126a4d1",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
     }
   ]
 }
